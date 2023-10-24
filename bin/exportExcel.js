@@ -58,11 +58,15 @@ module.exports = async (columns) => {
     for (const file of files) {
       const content = fs.readFileSync(file, "utf-8");
       content.replace(regex, (match, p1, p2) => {
-        data.push({
-          code: p1,  // 唯一编码
-          zh_CN: localesLang['zh_CN'][p1] ? localesLang['zh_CN'][p1] : p2, // 中文
-          en_US: localesLang['en_US'][p1] ? localesLang['en_US'][p1] : p2, // 英文
-        })
+        // 重复key不导出
+        const f = data.findIndex((res) => res['code'] === p1);
+        if (f === -1) {
+          data.push({
+            code: p1,  // 唯一编码
+            zh_CN: localesLang['zh_CN'][p1] ? localesLang['zh_CN'][p1] : p2, // 中文
+            en_US: localesLang['en_US'][p1] ? localesLang['en_US'][p1] : p2, // 英文
+          })
+        }
       });
     }
   }
