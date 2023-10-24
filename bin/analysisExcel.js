@@ -18,7 +18,7 @@ module.exports = () => {
   });
 
   // 2、按照语言生成不同文件夹
-  const head = ['zh_CN', 'zh_HK', 'zh_US'];
+  const head = ['zh_CN', 'zh_HK', 'en_US'];
   const i18nData = {};
   generateFolder(path.join(cwd, 'i18n')).then((res) => {
     if (res) {

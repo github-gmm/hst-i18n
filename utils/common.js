@@ -28,21 +28,24 @@ const zhTransformHk = function async (str, type) {
 
 const assemblyData = function (data, head) {
   const newData = [];
-  for (let index = 0; index < data.length; index++) {
-    const element = data[index];
+	for (const element of data) {
     let rowData = [];
-    for (let index = 0; index < head.length; index++) {
-      const key = head[index];
-      if (element[key]) {
-        rowData.push(element[key])
-      } else if (key === 'zh_HK'){
+    for (const key of head) {
+			const word = element['code'].substring(element['code'].lastIndexOf('.') + 1, element['code'].length);
+			const result = word ? word.split(/(?=[A-Z])/).map((v) => v.trim()) : [];
+			result.forEach((el, index) => {
+				result[index] = `${el.slice(0, 1).toUpperCase()}${el.slice(1).toLowerCase()}`;
+			});
+			if (key === 'zh_HK'){
         rowData.push(zhTransformHk(element['zh_CN'], key))
-      }  else if (key === 'en_US'){
-        // 翻译要钱 暂不支持
+      } else if (key === 'en_US'){
+				rowData.push(element['zh_CN'] === element[key] ? result.join(' ') : element[key]);
+      } else {
+				rowData.push(element[key])
       }
-    }
+		}
     newData.push(rowData);
-  };
+	}
 
   return newData;
 };
@@ -80,10 +83,18 @@ const generateFile = (path, content) => {
 	})
 }
 
+const getJsonData = async (path) => {
+	const data =fs.readFileSync(path, 'utf8');
+  // 解析JSON数据
+  const jsonData = JSON.parse(data || '{}');
+	return jsonData
+}
+
 
 module.exports = {
   assemblyData,
 	intl,
 	generateFolder,
-	generateFile
+	generateFile,
+	getJsonData
 }

@@ -10,15 +10,15 @@ const questions = [
     name: 'type',
     choices: [
         {
-            name: '导出Excel未翻译文件',
+            name: '导出未翻译字段（中文、英文）',
             value: 'export'
         },
         {
-            name: '导入Excel已翻译文件',
+            name: '写入翻译 - (i18n.xlsx)',
             value: 'import'
         }
     ]
-  }
+  },
 ]
 
 inquirer.prompt(questions).then(answer=>{
@@ -26,7 +26,8 @@ inquirer.prompt(questions).then(answer=>{
   const {type} = answer;
   switch (type) {
     case 'export':
-      exportExcel();
+      const headColumns = ['code', 'zh_CN', 'en_US']
+      exportExcel(headColumns);
       break;
     case 'import':
       analysisExcel();
