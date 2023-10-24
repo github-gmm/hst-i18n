@@ -10,11 +10,11 @@ const questions = [
     name: 'type',
     choices: [
         {
-            name: '导出未翻译字段（中文、英文）',
+            name: '生成翻译文件i18n.xlsx（只支持英文、中文）',
             value: 'export'
         },
         {
-            name: '写入翻译 - (i18n.xlsx)',
+            name: '写入翻译i18n文件夹',
             value: 'import'
         }
     ]
@@ -30,7 +30,8 @@ inquirer.prompt(questions).then(answer=>{
       exportExcel(headColumns);
       break;
     case 'import':
-      analysisExcel();
+      const headColumns1 = ['zh_CN', 'en_US']
+      analysisExcel(headColumns1);
       break;
   }
 })
