@@ -1,6 +1,6 @@
 {
   "name": "hst-i18n",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "多语言处理工具",
   "main":  "./bin/hstI18n.js",
   "bin": "./bin/hstI18n.js",

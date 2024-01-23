@@ -2,8 +2,7 @@
 /.env.local
 /.umirc.local.ts
 /config/config.local.ts
-/src/.umi
-/src/.umi-production
-/src/.DS_Store
+/src
 /dist
 /.idea
+

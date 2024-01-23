@@ -54,11 +54,12 @@ module.exports = async (columns) => {
       cwd: projectPath,
       ignore: "**/node_modules/**", // 忽略node_modules文件夹
     });
-    const regex = /intl\.\$T\(['"]([^'"]+)['"]\)\.\$D\(['"]([^'"]+)['"]\)/g;
+    const regex = /lang\.\$T\('([^']*)'.*?\)\.\$D\('([^']*)'\)/g;
     for (const file of files) {
       const content = fs.readFileSync(file, "utf-8");
       content.replace(regex, (match, p1, p2) => {
         // 重复key不导出
+        console.log(match)
         const f = data.findIndex((res) => res['code'] === p1);
         if (f === -1) {
           data.push({
