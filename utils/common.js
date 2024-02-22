@@ -96,5 +96,6 @@ module.exports = {
 	intl,
 	generateFolder,
 	generateFile,
-	getJsonData
+	getJsonData, 
+	zhTransformHk,
 }

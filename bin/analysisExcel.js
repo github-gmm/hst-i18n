@@ -1,4 +1,4 @@
-const { generateFolder, generateFile } = require("../utils/common");
+const { generateFolder, generateFile, zhTransformHk } = require("../utils/common");
 const { readFile } = require("../utils/generateExcel");
 const path = require("path");
 
@@ -17,6 +17,13 @@ module.exports = (columns) => {
     path: excelPath
   });
 
+  const getLang = (lang, defaultVal) => {
+    if (lang === 'zh_HK') {
+      return zhTransformHk(defaultVal, lang);
+    }
+    return '';
+  }
+
   // 2、按照语言生成不同文件夹
   const i18nData = {};
   generateFolder(path.join(cwd, 'i18n')).then((res) => {
@@ -25,7 +32,7 @@ module.exports = (columns) => {
         columns.map((key) => {
           i18nData[key] = {};
           data.forEach((local) => {
-            i18nData[key][local.code] = local[key] ? String(local[key]) : '';
+            i18nData[key][local.code] = local[key] ? String(local[key]) : getLang(key, local['zh_CN']);
           })
           return generateFolder(path.join(`${cwd}/i18n`, key))
         })

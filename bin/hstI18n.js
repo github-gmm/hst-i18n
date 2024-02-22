@@ -30,7 +30,7 @@ inquirer.prompt(questions).then(answer=>{
       exportExcel(headColumns);
       break;
     case 'import':
-      const headColumns1 = ['zh_CN', 'en_US']
+      const headColumns1 = ['zh_CN', 'en_US', 'zh_HK']
       analysisExcel(headColumns1);
       break;
   }
