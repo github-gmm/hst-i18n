@@ -54,7 +54,7 @@ module.exports = async (columns) => {
       cwd: projectPath,
       ignore: "**/node_modules/**", // 忽略node_modules文件夹
     });
-    const regex = /lang\s*?\.\$T\('([^']*)'.*?\)\s*?\.\$D\('([^']*)'\)/g;
+    const regex = /lang\s*?\.\$T\('([^']*)'.*?\)\s*?\.\$D\(\s*?'([^']*)'\s*?\)/g;
     for (const file of files) {
       const content = fs.readFileSync(file, "utf-8");
       content.replace(regex, (match, p1, p2) => {

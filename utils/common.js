@@ -62,6 +62,8 @@ const intl = {
 };
 
 const fs = require('fs');
+const yaml = require('js-yaml');
+// const flatten = require('flatten-obj');
 
 const generateFolder = (path) => {
 	return new Promise((resolve) => {
@@ -90,6 +92,62 @@ const getJsonData = async (path) => {
 	return jsonData
 }
 
+function unFlattenObject(flatObject) {
+  if (typeof flatObject !== 'object' || flatObject === null) {
+    return flatObject;
+  }
+
+  const result = {};
+
+  for (const key in flatObject) {
+    if (Object.hasOwnProperty.call(flatObject, key)) {
+      const keys = key.split('.');
+      let currentObj = result;
+
+      for (let i = 0; i < keys.length; i++) {
+        const currentKey = keys[i];
+
+        if (i === keys.length - 1) {
+          currentObj[currentKey] = flatObject[key];
+        } else {
+          if (!currentObj[currentKey]) {
+            currentObj[currentKey] = {};
+          }
+          currentObj = currentObj[currentKey];
+        }
+      }
+    }
+  }
+
+  return result;
+}
+
+function flattenObject(obj, prefix = '') {
+  let result = {};
+  for (const key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      const propName = prefix ? `${prefix}.${key}` : key;
+      if (typeof obj[key] === 'object' && obj[key] !== null) {
+        // 递归处理嵌套对象
+        const nested = flattenObject(obj[key], propName);
+        Object.assign(result, nested);
+      } else {
+        // 设置当前属性值
+        result[propName] = obj[key];
+      }
+    }
+  }
+  return result;
+}
+
+const getJsonDataByYaml = async (path) => {
+	const data = fs.readFileSync(path, 'utf8');
+  // 解析JSON数据
+  const jsonData = yaml.load(data);
+	const result = flattenObject(jsonData);
+	return result;
+}
+
 
 module.exports = {
   assemblyData,
@@ -97,5 +155,7 @@ module.exports = {
 	generateFolder,
 	generateFile,
 	getJsonData, 
+	getJsonDataByYaml,
 	zhTransformHk,
+	unFlattenObject,
 }

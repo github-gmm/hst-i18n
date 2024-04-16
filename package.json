@@ -1,8 +1,8 @@
 {
   "name": "hst-i18n",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "多语言处理工具",
-  "main":  "./bin/hstI18n.js",
+  "main": "./bin/hstI18n.js",
   "bin": "./bin/hstI18n.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -11,8 +11,10 @@
   "license": "ISC",
   "dependencies": {
     "exceljs": "^4.3.0",
+    "flatten-obj": "^3.1.1",
     "glob": "^10.3.3",
     "inquirer": "^8.0.0",
+    "js-yaml": "^4.1.0",
     "xlsx": "^0.18.5"
   }
 }

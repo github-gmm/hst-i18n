@@ -2,6 +2,8 @@
 const inquirer = require('inquirer');
 const exportExcel = require('./exportExcel');
 const analysisExcel = require('./analysisExcel');
+const toExcel = require('./translateYaml/toExcel');
+const toYaml = require('./translateYaml/toYaml');
 
 const questions = [
   {
@@ -16,6 +18,14 @@ const questions = [
         {
             name: '写入翻译i18n文件夹',
             value: 'import'
+        },
+        {
+          name: '导出yaml翻译文件',
+          value: 'exportY'
+        },
+        {
+          name: '导入yaml翻译文件',
+          value: 'importY'
         }
     ]
   },
@@ -32,6 +42,14 @@ inquirer.prompt(questions).then(answer=>{
     case 'import':
       const headColumns1 = ['zh_CN', 'en_US', 'zh_HK']
       analysisExcel(headColumns1);
+      break;
+    case 'exportY':
+      const headColumns2 = ['code', 'zh_CN', 'en_US', 'zh_HK'];
+      toExcel(headColumns2);
+      break;
+    case 'importY':
+      const headColumns3 = ['zh_CN', 'en_US', 'zh_HK'];
+      toYaml(headColumns3);
       break;
   }
 })
