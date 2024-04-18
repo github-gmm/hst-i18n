@@ -6,5 +6,5 @@
 /dist
 /.idea
 /i18n
-/i18n.xlsx
+/*.xlsx
 
